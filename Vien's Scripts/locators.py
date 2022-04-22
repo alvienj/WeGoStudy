@@ -9,5 +9,5 @@ email = fake.email()
 city = fake.city()
 message = fake.sentence(nb_words=100)
 browseinstitutions_url = 'http://34.233.225.85/browse-institutions'
-
-
+login = 'chris.velasco78@gmail.com'
+password = '123cctb'
