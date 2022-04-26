@@ -33,18 +33,25 @@ def login():
     sleep(1)
     driver.find_element(By.XPATH, "//*[@name='commit']").click()
     sleep(1)
+    if driver.current_url == 'http://34.233.225.85/partner/home':
+        print('You are signed in as a Partner')
+    else:
+        print('Oh something is wrong.. please fix go back')
 
 def application():
     driver.find_element(By.XPATH, "//*[contains(@class, 'navbar-nav')]/li/a/span").click()
     sleep(1)
     driver.find_element(By.XPATH, "//a[text()='Applications']").click()
+    sleep(2)
+    driver.find_element(By.XPATH, "//*[contains(@class, 'odd')]/td[9]").click()
     sleep(1)
     driver.find_element(By.XPATH, "//*[@id='send_message']").click()
     sleep(1)
-    if driver.find_element(By.XPATH, "//div[contains(text(), 'Please select any application to send message')]").is_displayed:
-        print('There seems to be an error here')
-    else:
-        print('Oh... thats weird')
+    driver.find_element(By.XPATH, "//*[@id='message']").send_keys(locators.message)
+    sleep(1)
+    driver.find_element(By.XPATH, "//*[@name='commit']").click()
+    sleep(1)
+
 
 def Teardown1():
     if driver is not None:
