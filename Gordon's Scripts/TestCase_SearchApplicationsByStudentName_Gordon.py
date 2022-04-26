@@ -58,6 +58,7 @@ def login(username, password):
         driver.find_element(By.ID, "user_email").send_keys(username)
         driver.find_element(By.ID, "user_password").send_keys(password)
         driver.find_element(By.NAME, "commit").click()
+        sleep(2)
         if driver.title == "WeGoStudy" and driver.current_url == wegostudy_url+"partner/home":
             print("We are login partner page now.")
     assert driver.current_url == wegostudy_url+"partner/home"
@@ -66,8 +67,8 @@ def login(username, password):
 
 
 def logout():
-    driver.find_element(By.CSS_SELECTOR, "class#my-auto mr-2 pf-name").click()
-    driver.find_element(By.XPATH, '//*[@id="navbar-nav"]/ul[2]/li[2]/a/ span').click()
+    driver.find_element(By.XPATH, "//*[@class='my-auto mr-2 pf-name']").click()
+    # driver.find_element(By.XPATH, '//*[@id="navbar-nav"]/ul[2]/li[2]/a/ span').click()
     sleep(1)
     driver.find_element(By.LINK_TEXT, "Log out").click()
     # driver.find_element(By.XPATH, "//span[contains(.,'Log out')]").click()
@@ -133,7 +134,9 @@ if __name__ == '__main__':
     # logger()
     setup()
     login(username,password)
+    sleep(2)
     # check_featured_institutions()
     search_applications_by_student_name("John")
+    sleep(2)
     logout()
     teardown()
