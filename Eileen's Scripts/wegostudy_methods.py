@@ -71,13 +71,11 @@ def sign_in():
     driver.find_element(By.XPATH, "//input[@name='commit']").click()
     sleep(1)
 
-    # driver.find_element(By.XPATH, "//div[@id='authentication']").click()
-    # sleep(0.5)
-
     if driver. current_url == locators.partner_home_url:
         driver.find_element(By.XPATH, "//span[contains(.,'Ch Velasco')]").is_displayed()
         sleep(0.5)
-        print(f'Test scenario: login with new credential : username - chris.velasco78@gmail.com, password - 123cctb')
+        print(f'Test scenario: login with new credential \n'
+              f'username - chris.velasco78@gmail.com, password - 123cctb ------is passed.')
 
     else:
         print("Check your code!")
@@ -97,110 +95,173 @@ def my_wegostudy_applications():
             print(f'we are at Application home page -- {driver.current_url}')
 
         else:
-            print(' we are not landing at application page, check your code')
+            print('we are not landing at application page, check your code')
 
         driver.find_element(By.XPATH, "//a[contains(.,'All Applications')]").click()
         sleep(0.5)
 
-        driver.find_element(By.XPATH, "//a[contains(.,'AS000071-35')]").is_displayed()
+        driver.find_element(By.XPATH, f"//a[contains(.,'{locators.application_number}')]").is_displayed()
         sleep(0.5)
 
         # navigate to Edit admission application by application number.
-        driver.find_element(By.XPATH, "//a[contains(.,'AS000071-35')]").click()
+        driver.find_element(By.XPATH, f"//a[contains(.,'{locators.application_number}')]").click()
         sleep(2)
 
         # switch to new tab
         driver.switch_to.window(driver.window_handles[1])
-        sleep(0.5)
+        sleep(1)
 
-        if driver. current_url == locators.edit_reza_admission_url:
-            assert driver.find_element(By.XPATH, "//h4[contains(.,'Edit admission application for Reza')]").is_displayed()
-            print(f' we are at Edit admission application for Reza page.')
+        if driver. current_url == locators.edit_application_admission_url:
+            assert driver.find_element(By.XPATH, f"//h4[contains(.,'Edit admission application for {locators.full_name}')]").is_displayed()
+            print(f'we are landing Edit admission application page - {locators.full_name} \n'
+                  f'Test Scenario : Clicking application number to get to Edit admission application page ---- is passed.')
 
         else:
-            print('check your code!')
+            print('Fail to landing Edit application page.check your code!')
+        sleep(1)
         driver.close()
 
         # switch to original tab
         driver.switch_to.window(driver.window_handles[0])
 
         # Id Number
-        driver.find_element(By.XPATH, "//a[contains(.,'S000071')]").is_displayed()
+        driver.find_element(By.XPATH, f"//a[normalize-space()='{locators.id_number}']").is_displayed()
         sleep(0.5)
 
-        driver.find_element(By.XPATH, "//a[contains(.,'S000071')]").click()
+        driver.find_element(By.XPATH, f"//a[normalize-space()='{locators.id_number}']").click()
         sleep(0.5)
 
-        # switch to new tab
+        # Navigate to personal detail page
         driver.switch_to.window(driver.window_handles[1])
-        sleep(0.5)
+        sleep(1)
 
-        if driver.current_url == locators.reza_detail_url:
-            driver.find_element(By.XPATH, "//a[contains(.,'Personal Details:')]").is_displayed()
-            driver.find_element(By.XPATH, "//a[contains(.,'Reza')]").is_displayed()
-            print(f' we are at student details page.')
+        if driver.current_url == locators.application_detail_url:
+            driver.find_element(By.XPATH, f"//td[contains(.,'{locators.first_name}')]").is_displayed()
+            sleep(0.5)
+            driver.find_element(By.XPATH, f"//td[contains(.,'{locators.last_name}')]").is_displayed()
+            sleep(0.5)
+            driver.find_element(By.XPATH, f"//h6[contains(.,'{locators.full_name}')]").is_displayed()
+            sleep(0.5)
+            print(f'we are at {locators.full_name} student details page.\n'
+                  f'Test Scenario : Clicking ID number to get to Student detail page ---- is passed.')
 
         else:
-            print('check your code')
+            print('something goes wrong at detail page. check your code')
+
+        sleep(2)
         driver.close()
 
         # switch to original tab
         driver.switch_to.window(driver.window_handles[0])
 
-        #First name, Lastname
-        driver.find_element(By.XPATH, "//a[contains(.,'Reza')]").is_displayed()
+        # First name, Lastname
+        driver.find_element(By.XPATH, f"//td[contains(.,'{locators.first_name}')]").is_displayed()
         sleep(0.5)
 
-        driver.find_element(By.XPATH, "//a[contains(.,'sada')]").is_displayed()
+        driver.find_element(By.XPATH, f"//td[contains(.,'{locators.last_name}')]").is_displayed()
+        sleep(0.5)
+        print(f'Check first name-{locators.first_name}, Last name-{locators.last_name}')
+
+        # navigate to school page
+        driver.find_element(By.XPATH, f"//a[contains(.,'{locators.school_name}')]").is_displayed()
         sleep(0.5)
 
-        # school
-        driver.find_element(By.XPATH, "//a[contains(.,'Algonquin College')]").is_displayed()
-        sleep(0.5)
-
-        driver.find_element(By.XPATH, "//a[contains(.,'Algonquin College')]").click()
+        driver.find_element(By.XPATH, f"//a[contains(.,'{locators.school_name}')]").click()
         sleep(0.5)
 
         # switch to new tab
         driver.switch_to.window(driver.window_handles[1])
         sleep(0.5)
-        if driver.current_url == locators.algonquin_college_url:
-            print('we are at ALGONQUIN COLLEGE home page ')
+
+        if driver.current_url == locators.school_url:
+            print(f'we are at {locators.school_name} page ')
+
+        # navigate to college website
+            driver.find_element(By.XPATH, "//a[contains(.,'Visit College Website')]").click()
+            sleep(0.5)
+
+            driver.switch_to.window(driver.window_handles[2])
+            sleep(0.5)
+
+            if driver.current_url == locators.school_website_url:
+                print(f'We are at {locators.school_name} website.----{locators.school_website_url}')
+                driver.close()
+
+            driver.switch_to.window(driver.window_handles[1])
+
+            driver.find_element(By.XPATH, "//a[contains(.,'Tuition')]").click()
+            sleep(0.5)
+            driver.switch_to.window(driver.window_handles[2])
+            sleep(0.5)
+            if driver.current_url == locators.school_website_tuition_url:
+                print(f'we are at tuition page of {locators.school_name}\n'
+                      f'----{locators.school_website_tuition_url}')
+                driver.close()
+
+        driver.switch_to.window(driver.window_handles[1])
+        sleep(0.5)
         driver.close()
 
          # switch to original tab
         driver.switch_to.window(driver.window_handles[0])
         sleep(0.5)
 
-        #Programs
-        driver.find_element(By.XPATH, "//a[contains(.,'Forestry Technician')]").is_displayed()
+        # navigate to Programs page
+        driver.find_element(By.XPATH, f"//a[contains(.,'{locators.program_name}')]").is_displayed()
         sleep(0.5)
-        driver.find_element(By.XPATH, "//a[contains(.,'Forestry Technician')]").click()
+
+        driver.find_element(By.XPATH, f"//a[contains(.,'{locators.program_name}')]").click()
         sleep(0.5)
 
         # switch to new tab
         driver.switch_to.window(driver.window_handles[1])
         sleep(0.5)
 
-        if driver.current_url == locators.forestry_technician_url:
-            driver.find_element(By.XPATH, "//h4[contains(.,'Forestry Technician')]").is_displayed()
-            print('we are at Forestry Technician page.')
-        driver.close()
+        if driver.current_url == locators.programs_url:
+            driver.find_element(By.XPATH, f"//h4[contains(.,'{locators.program_title}')]").is_displayed()
+            print(f'we are at {locators.program_title}  page.')
 
-        # switch to original tab
+        # navigate to college website
+            driver.find_element(By.XPATH, "//a[contains(.,'Visit College Website')]").click()
+            sleep(0.5)
+
+            driver.switch_to.window(driver.window_handles[2])
+            sleep(0.5)
+
+            if driver.current_url == locators.school_website_url:
+                print(f'We are at {locators.school_name} website.----{locators.school_website_url}')
+                driver.close()
+
+            driver.switch_to.window(driver.window_handles[1])
+
+            driver.find_element(By.XPATH, "//a[contains(.,'Tuition')]").click()
+            sleep(0.5)
+
+            driver.switch_to.window(driver.window_handles[2])
+            sleep(0.5)
+
+            if driver.current_url == locators.school_website_tuition_url:
+                print(f'we are at tuition page of {locators.school_name}\n'
+                      f'----{locators.school_website_tuition_url}')
+
+                driver.close()
+                driver.switch_to.window(driver.window_handles[1])
+                sleep(0.5)
+                driver.close()
+
         driver.switch_to.window(driver.window_handles[0])
         sleep(0.5)
 
         # status
-        driver.find_element(By.XPATH, "//span[@class='badge badge-incomplete status-badge']").is_displayed()
+        driver.find_element(By.XPATH, "//span[contains(.,'Incomplete')]").is_displayed()
         sleep(0.5)
 
         # status date
-        driver.find_element(By.XPATH, "//td[contains(.,'April 21, 2022')]").is_displayed()
+        driver.find_element(By.XPATH, f"//td[contains(.,'{locators.status_date}')]").is_displayed()
         sleep(0.5)
 
         # check select
-        driver.find_element(By.XPATH, "//label[@for='application_ids_84']").click()
+        driver.find_element(By.XPATH, "//*[contains(@class, 'odd')]/td[9]").click()
         sleep(0.5)
 
         # Chat
@@ -211,24 +272,16 @@ def my_wegostudy_applications():
         sleep(0.5)
 
         driver.find_element(By.XPATH, "//input[@id='admin_message_content']").send_keys(locators.subject)
+        sleep(1)
+
+        driver.find_element(By.XPATH, "//input[@id='message_files']").send_keys("C:\\practice pic\\browse institution.png")
+
+        driver.find_element(By.XPATH, "//i[@class='fa fa-paper-plane']").click()
         sleep(0.5)
 
-        driver.find_element(By.XPATH, "//i[@class='fa fa-paper-plane']]").click()
-        sleep(0.5)
-
-        driver.find_element(By.XPATH, "//i[@class='fa fa-comments-o']").click()
+        driver.find_element(By.XPATH, "//button[contains(.,'Close')]").click()
         sleep(0.5)
         print('successfully sent message!')
-
-        driver.find_element(By.XPATH, "///button[@class='btn btn-default btn-sm']").click()
-        sleep(0.5)
-
-
-
-
-
-
-
 
 
 
@@ -263,4 +316,4 @@ setUp()
 # browse_institution()
 sign_in()
 my_wegostudy_applications()
-# tearDown()
+tearDown()
