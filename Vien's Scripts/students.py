@@ -61,7 +61,7 @@ def Personal():
     sleep(1)
     driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_birth_date']").click()
     sleep(1)
-    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_birth_date']").send_keys('1985-02-13')
+    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_birth_date']").send_keys('1')
     sleep(1)
     driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_passport_number']").send_keys('12345')
     sleep(1)
@@ -120,6 +120,21 @@ def Education():
     driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_user_educations_attributes_0_gpa']").send_keys('4')
     sleep(1)
 
+def workexperience():
+    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_type_of_industry']").send_keys('Associate')
+    sleep(1)
+    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_position_rank']").send_keys('Top floor boss')
+    sleep(1)
+    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_employer']").send_keys('Self-Employed')
+    sleep(1)
+    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_title']").send_keys('Associate')
+    sleep(1)
+    driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_job_description']").send_keys(locators.message)
+    sleep(1)
+    driver.find_element(By.XPATH, "//*[@name='commit']").click()
+    sleep(1)
+
+
 def Teardown1():
     if driver is not None:
         print(f'Test Started at: {datetime.datetime.now()}')
@@ -129,6 +144,8 @@ def Teardown2():
     if driver is not None:
         print(f'--------------------------------------')
         print(f'Test Completed at: {datetime.datetime.now()}')
+    driver.close()
+    driver.quit()
 
 
 
@@ -140,4 +157,5 @@ students()
 Personal()
 Contact()
 Education()
+workexperience()
 Teardown2()
