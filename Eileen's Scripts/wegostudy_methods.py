@@ -6,8 +6,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
-s = Service(executable_path='./chromedriver.exe')
-driver = webdriver.Chrome(service=s)
+# s = Service(executable_path='./chromedriver.exe')
+# driver = webdriver.Chrome(service=s)
+from webdriver_manager.chrome import ChromeDriverManager
+driver = webdriver.Chrome(ChromeDriverManager().install())
 
 def setUp():
     #  print test start day and time
@@ -65,14 +67,14 @@ def sign_in():
     driver.find_element(By.XPATH, "//input[@id='user_email']").send_keys('chris.velasco78@gmail.com')
     sleep(0.5)
 
-    driver.find_element(By.XPATH,"//input[@id='user_password']").send_keys('123cctb')
+    driver.find_element(By.XPATH, "//input[@id='user_password']").send_keys('123cctb')
     sleep(0.5)
 
     driver.find_element(By.XPATH, "//input[@name='commit']").click()
     sleep(1)
 
     if driver. current_url == locators.partner_home_url:
-        driver.find_element(By.XPATH, "//span[contains(.,'Ch Velasco')]").is_displayed()
+        driver.find_element(By.XPATH, "//span[contains(.,'Chris Velasco')]").is_displayed()
         sleep(0.5)
         print(f'Test scenario: login with new credential \n'
               f'username - chris.velasco78@gmail.com, password - 123cctb ------is passed.')
@@ -80,6 +82,180 @@ def sign_in():
     else:
         print("Check your code!")
 
+def students():
+    if driver.current_url == locators.partner_home_url:
+        driver.find_element(By.XPATH, "//span[contains(.,'My WeGoStudy')]").click()
+        sleep(0.5)
+        driver.find_element(By.XPATH, "//a[contains(.,'Students')]").click()
+        sleep(0.5)
+
+        #students
+        if driver.current_url == locators.mywegostudy_students_url:
+            driver.find_element(By.XPATH, "//h4[normalize-space()='My Students']").is_displayed()
+            sleep(0.5)
+            print(f'we are at students home page -- {driver.current_url}')
+
+        else:
+            print('we are not landing at students page, check your code')
+
+        driver.find_element(By.XPATH, "//a[text()='Create New Student']").click()
+        sleep(0.5)
+
+        # Create a new student
+        # personal
+        if driver.current_url == locators.mywegostudy_new_students_url:
+            driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_first_name']").send_keys(locators.first_name)
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_last_name']").send_keys(locators.last_name)
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_birth_date']").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_birth_date']").send_keys('1')
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[@id='user_student_detail_attributes_passport_number']").send_keys(locators.passport)
+            sleep(1)
+
+            driver.find_element(By.XPATH, '//*[contains(@class, "select2-selection")]').click()
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[contains(@class, 'select2-search__field')]").send_keys('Canada')
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//html/body/span/span/span[2]/ul/li").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[@id='phone_number']").send_keys(locators.phone)
+            sleep(1)
+
+            # contact
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_address_attributes_mailing_address']").send_keys(locators.address)
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//span[text()='Country']").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_address_attributes_country_chosen"]\n'
+                                '/div/div/input').send_keys('Canada')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_address_attributes_country_chosen"]\n'
+                                '/div/ul/li/em').click()
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//span[text()='Province/State']").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_address_attributes_state_chosen"]\n'
+                                '/div/div/input').send_keys('British Columbia')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_address_attributes_state_chosen"]\n'
+                                '/div/ul/li/em').click()
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//span[text()='City']").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_address_attributes_city_chosen"]\n'
+                                '/div/div/input') .send_keys('Kamloops')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_address_attributes_city_chosen"]/div/ul/li/em').click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_address_attributes_zip_code']").send_keys(locators.postalcode)
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//*[@id='user_email']").send_keys(locators.email)
+            sleep(1)
+
+            #Education
+            driver.find_element(By.XPATH, "//span[text()='Credentials']").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_user_educations_attributes_0_credentials_chosen"]\n'
+                                '/div/div/input').send_keys('Certificate')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_user_educations_attributes_0_credentials_chosen"]\n'
+                                '/div/ul/li').click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_user_educations_attributes_0_school_name']").send_keys('Random High School')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_user_educations_attributes_0_program']").send_keys(
+                'Computer Science')
+            sleep(1)
+
+            driver.find_element(By.XPATH, "//span[text()='GPA Scale']").click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_user_educations_attributes_0_gpa_scale_chosen"]\n'
+                                '/div/div/input').send_keys('4')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                '//*[@id="user_student_detail_attributes_user_educations_attributes_0_gpa_scale_chosen"]\n'
+                                '/div/ul/li').click()
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_user_educations_attributes_0_gpa']").send_keys('4')
+            sleep(1)
+
+            #document
+            driver.execute_script("window.scrollTo(0,700);")
+            sleep(0.5)
+
+            driver.find_element(By.XPATH, "//input[@id='user_student_detail_attributes_documents_attributes_0_file']").send_keys("C:\\practice pic\\browse institution.png")
+
+            # workexperience
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_type_of_industry']").send_keys('Associate')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_position_rank']").send_keys('Top floor boss')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_employer']").send_keys('Self-Employed')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_title']").send_keys('Associate')
+            sleep(1)
+
+            driver.find_element(By.XPATH,
+                                "//*[@id='user_student_detail_attributes_work_experiences_attributes_0_job_description']").send_keys(locators.message)
+            sleep(1)
+
+            driver.execute_script("window.scrollTo(800,1000);")
+            sleep(0.5)
+
+            driver.find_element(By.XPATH, "//*[@name='commit']").click()
+            sleep(1)
+
+            print(f'Test scenario: Create New Student ----- successfully created new student\n'
+                  f'student name -- {locators.full_name} -------is passed')
 
 def my_wegostudy_applications():
     if driver.current_url == locators.partner_home_url:
@@ -100,6 +276,7 @@ def my_wegostudy_applications():
         driver.find_element(By.XPATH, "//a[contains(.,'All Applications')]").click()
         sleep(0.5)
 
+        # application_number
         driver.find_element(By.XPATH, f"//a[contains(.,'{locators.application_number}')]").is_displayed()
         sleep(0.5)
 
@@ -195,7 +372,9 @@ def my_wegostudy_applications():
             sleep(0.5)
             if driver.current_url == locators.school_website_tuition_url:
                 print(f'we are at tuition page of {locators.school_name}\n'
-                      f'----{locators.school_website_tuition_url}')
+                      f'----{locators.school_website_tuition_url} \
+                      Test Scenario : Clicking school and able to navigate to college home page to see tuition.')
+
                 driver.close()
 
         driver.switch_to.window(driver.window_handles[1])
@@ -260,10 +439,6 @@ def my_wegostudy_applications():
         driver.find_element(By.XPATH, f"//td[contains(.,'{locators.status_date}')]").is_displayed()
         sleep(0.5)
 
-        # check select
-        driver.find_element(By.XPATH, "//*[contains(@class, 'odd')]/td[9]").click()
-        sleep(0.5)
-
         # Chat
         driver.find_element(By.XPATH, "//i[@class='fa fa-comments-o']").click()
         sleep(0.5)
@@ -282,6 +457,40 @@ def my_wegostudy_applications():
         driver.find_element(By.XPATH, "//button[contains(.,'Close')]").click()
         sleep(0.5)
         print('successfully sent message!')
+
+        # check select
+        driver.find_element(By.XPATH, "//*[contains(@class, 'odd')]/td[9]").click()
+        sleep(0.5)
+
+        # pay for application
+        driver.find_element(By.XPATH, "//button[@id='pay_for_application']").click()
+        sleep(0.5)
+
+        driver.find_element(By.XPATH, "//input[@id='card_name']").send_keys(locators.card_holder_name)
+        sleep(0.5)
+
+        driver.find_element(By.XPATH, "//input[@id='card_number']").send_keys(locators.card_number)
+
+        driver.find_element(By.XPATH, "//input[@id='card_month']").send_keys(locators.card_expired_month)
+        sleep(0.5)
+
+        driver.find_element(By.XPATH, "//input[@id='card_year']").send_keys(locators.card_expired_year)
+        sleep(0.5)
+
+        driver.find_element(By.XPATH, "//input[@id='card_cvc']").send_keys(locators.cvc)
+        sleep(0.5)
+
+        driver.find_element(By.XPATH, "//input[@name='commit']").click()
+        sleep(0.5)
+
+    # delete_application
+    # check select
+    driver.find_element(By.XPATH, "//*[contains(@class, 'odd')]/td[9]").click()
+    sleep(0.5)
+
+    driver.find_element(By.XPATH, "//button[@id='delete_applications']").click()
+    sleep(0.5)
+
 
 
 
@@ -315,5 +524,6 @@ def my_wegostudy_applications():
 setUp()
 # browse_institution()
 sign_in()
-my_wegostudy_applications()
-tearDown()
+students()
+# my_wegostudy_applications()
+# tearDown()
