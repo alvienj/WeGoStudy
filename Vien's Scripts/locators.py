@@ -14,3 +14,4 @@ password = '123cctb'
 phone = fake.phone_number()
 address = fake.address().replace("\n", " ")
 postalcode = fake.zipcode()
+
